@@ -943,7 +943,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(2);
 var ReactDOM = __webpack_require__(18);
 var app_1 = __webpack_require__(27);
-ReactDOM.render(React.createElement(app_1.App, null), document.getElementById("lif-maps"));
+ReactDOM.render(React.createElement(app_1.App, null), document.getElementById("avalon-map"));
 
 
 /***/ }),
