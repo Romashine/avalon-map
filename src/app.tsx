@@ -8,9 +8,9 @@ declare const glases: string[];
 // tslint:disable-next-line:no-empty-interface
 export interface IAppProps {
 }
+
 export interface IAppState {
     file?: File;
-    imagePreviewUrl?: "./map.jpg";
     imageX?: number;
     imageY?: number;
     imageScale: number;
@@ -21,8 +21,10 @@ export interface IAppState {
 }
 
 export class App extends React.Component<IAppProps, IAppState> {
+    public img = new Image();
 
     constructor(props: IAppProps) {
+
         super(props);
 
         this.state = {
@@ -33,6 +35,9 @@ export class App extends React.Component<IAppProps, IAppState> {
             stikerX: 20,
             stikerY: 20,
         };
+
+        // Привязка карты
+        this.img.src = "../dist/map.jpg";
     }
 
     public render() {
@@ -49,7 +54,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     <tr className="canvas-app-body">
                         <td >
                             <div className="canvas-app-image" onWheel={this.onWheel.bind(this)}>
-                                <Map imageScale={this.state.imageScale} />
+                                <Map imageScale={this.state.imageScale} img={this.img} />
                             </div>
                         </td>
                     </tr>

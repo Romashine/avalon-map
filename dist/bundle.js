@@ -18473,6 +18473,7 @@ var App = /** @class */ (function (_super) {
     tslib_1.__extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
+        _this.img = new Image();
         _this.state = {
             imageScale: 1,
             imageX: 0,
@@ -18481,6 +18482,8 @@ var App = /** @class */ (function (_super) {
             stikerX: 20,
             stikerY: 20,
         };
+        // Привязка карты
+        _this.img.src = "../dist/map.jpg";
         return _this;
     }
     App.prototype.render = function () {
@@ -18492,7 +18495,7 @@ var App = /** @class */ (function (_super) {
                 React.createElement("tr", { className: "canvas-app-body" },
                     React.createElement("td", null,
                         React.createElement("div", { className: "canvas-app-image", onWheel: this.onWheel.bind(this) },
-                            React.createElement(map_1.Map, { imageScale: this.state.imageScale })))),
+                            React.createElement(map_1.Map, { imageScale: this.state.imageScale, img: this.img })))),
                 React.createElement("tr", null,
                     React.createElement("td", null,
                         React.createElement("div", { className: "canvas-app-footer text-header" },
@@ -18612,11 +18615,9 @@ var Map = /** @class */ (function (_super) {
         return _this;
     }
     Map.prototype.render = function () {
-        return (React.createElement(react_konva_1.Stage, null,
+        return (React.createElement(react_konva_1.Stage, { width: 500, height: 500 },
             React.createElement(react_konva_1.Layer, null,
-                React.createElement("img", { src: "../dist/map.jpg", style: {
-                        width: 500 * this.props.imageScale,
-                    } }))));
+                React.createElement(react_konva_1.Image, { image: this.props.img, width: 500, height: 500 }))));
     };
     return Map;
 }(React.Component));
