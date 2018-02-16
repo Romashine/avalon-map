@@ -1,0 +1,53 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                          supported by Chrome and Opera */
+}
+
+.body{
+    background: black;
+}
+
+.canvas-app-table{
+    
+    width: 100%;
+    
+}
+
+.text-header{
+    color: white;
+}
+
+.canvas-app-header{
+    background:black;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px;
+    font-style: normal;
+}
+.canvas-app-body{
+    height: 500px;
+}
+
+.canvas-app-image{
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid gray;
+    text-align: center;
+    background-color: rgb(0, 34, 76);
+}
+
+.canvas-app-footer{
+    background: black;
+    width: 100%;
+    height: 50px;
+}
+
