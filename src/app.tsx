@@ -1,5 +1,7 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { Icon } from "./components/icon";
+import { Map } from "./components/map";
 
 declare const glases: string[];
 
@@ -11,7 +13,7 @@ export interface IAppState {
     imagePreviewUrl?: "./map.jpg";
     imageX?: number;
     imageY?: number;
-    imageScale?: number;
+    imageScale: number;
     stikerUrl?: string;
     stikerX?: number;
     stikerY?: number;
@@ -38,7 +40,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             <table className="canvas-app-table noselect">
                 <tbody>
                     <tr >
-                        <td colSpan={3}>
+                        <td>
                             <div className="canvas-app-header text-header">
                                 Avalon
                             </div>
@@ -46,21 +48,15 @@ export class App extends React.Component<IAppProps, IAppState> {
                     </tr>
                     <tr className="canvas-app-body">
                         <td >
-                            <div className="canvas-app-image">
-                                <img
-                                    src={"../dist/map.jpg"}
-                                    style={{
-                                        left: this.state.imageX!,
-                                        top: this.state.imageY!,
-                                        width: 500 * this.state.imageScale!,
-                                    }}  />
+                            <div className="canvas-app-image" onWheel={this.onWheel.bind(this)}>
+                                <Map imageScale={this.state.imageScale} />
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div className="canvas-app-footer text-header">
-                                Web page in development. For allsuggestions and comments -
+                                Web page in development. For all suggestions and comments -
                                 <a href="https://discord.gg/9dGE8us">https://discord.gg/9dGE8us</a>
                             </div>
                         </td>
@@ -70,13 +66,22 @@ export class App extends React.Component<IAppProps, IAppState> {
         );
     }
 
-//#region Mouse actions
+    //#region Mouse actions
+    public onWheel(a: any) {
+        const scale = this.state.imageScale;
+        const newScale = scale! - a.deltaY / 1000;
+        if (scale && newScale < 5 && newScale > 1) {
+            this.setState({
+                imageScale: newScale,
+            });
+        }
+    }
 
-//#endregion
+    //#endregion
 
-//#region Navigation panel
+    //#region Navigation panel
 
-//#endregion
+    //#endregion
 
     public onClickGlases(item: string) {
         this.setState({
