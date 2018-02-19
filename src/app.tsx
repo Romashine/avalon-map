@@ -54,7 +54,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     <tr className="canvas-app-body">
                         <td >
                             <div className="canvas-app-image" onWheel={this.onWheel.bind(this)}>
-                                <Map imageScale={this.state.imageScale} img={this.img} />
+                                <Map imageScale={this.state.imageScale}/>
                             </div>
                         </td>
                     </tr>

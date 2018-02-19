@@ -3,7 +3,6 @@ import { Image, Layer, Stage } from "react-konva";
 
 export interface IMapProps {
     imageScale: number;
-    img: any;
 }
 export interface IMapState {
 }
@@ -19,11 +18,9 @@ export class Map extends React.Component<IMapProps, IMapState> {
 
     public render() {
         return (
-            <Stage width={500} height={500}>
-                <Layer>
-                    <Image image={this.props.img} width={500} height={500}/>
-                </Layer>
-            </Stage>
+            <div className="map">
+                <img src="../dist/map.jpg" height={500 * this.props.imageScale} width={500 * this.props.imageScale} />
+            </div>
         );
     }
 }
