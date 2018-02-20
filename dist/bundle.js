@@ -18615,7 +18615,7 @@ var Map = /** @class */ (function (_super) {
     }
     Map.prototype.render = function () {
         return (React.createElement("div", { className: "map" },
-            React.createElement("img", { src: "../dist/map.jpg", height: 500 * this.props.imageScale, width: 500 * this.props.imageScale })));
+            React.createElement("img", { src: "../dist/map.jpg", className: "dragme", height: 500 * this.props.imageScale, width: 500 * this.props.imageScale })));
     };
     return Map;
 }(React.Component));
