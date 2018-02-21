@@ -18474,6 +18474,18 @@ var App = /** @class */ (function (_super) {
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.img = new Image();
+        //#region Mouse actions
+        _this.onWheel = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var scale = _this.state.imageScale;
+            var newScale = scale - e.deltaY / 1000;
+            if (scale && newScale < 5 && newScale > 1) {
+                _this.setState({
+                    imageScale: newScale,
+                });
+            }
+        };
         _this.state = {
             imageScale: 1,
             imageX: 0,
@@ -18494,7 +18506,7 @@ var App = /** @class */ (function (_super) {
                         React.createElement("div", { className: "canvas-app-header text-header" }, "Avalon"))),
                 React.createElement("tr", { className: "canvas-app-body" },
                     React.createElement("td", null,
-                        React.createElement("div", { className: "canvas-app-image", onWheel: this.onWheel.bind(this) },
+                        React.createElement("div", { className: "canvas-app-image", onWheel: this.onWheel },
                             React.createElement(map_1.Map, { scale: this.state.imageScale })))),
                 React.createElement("tr", null,
                     React.createElement("td", null,
@@ -18502,20 +18514,10 @@ var App = /** @class */ (function (_super) {
                             "Web page in development. For all suggestions and comments -",
                             React.createElement("a", { href: "https://discord.gg/9dGE8us" }, "https://discord.gg/9dGE8us")))))));
     };
-    //#region Mouse actions
-    App.prototype.onWheel = function (a) {
-        var scale = this.state.imageScale;
-        var newScale = scale - a.deltaY / 1000;
-        if (scale && newScale < 5 && newScale > 1) {
-            this.setState({
-                imageScale: newScale,
-            });
-        }
-    };
     //#endregion
     //#region Navigation panel
     //#endregion
-    App.prototype.onClickGlases = function (item) {
+    App.prototype.onClickGlasses = function (item) {
         this.setState({
             stikerUrl: item,
         });
@@ -18611,6 +18613,18 @@ var Map = /** @class */ (function (_super) {
     function Map(props) {
         var _this = _super.call(this, props) || this;
         _this.drag = false;
+        _this.onMouseDown = function () {
+            console.log("MouseDown");
+        };
+        _this.onMouseUp = function () {
+            console.log("MouseUp");
+        };
+        _this.onMouseMove = function (e) {
+            if (e.buttons === 1) {
+                console.log(e.clientX);
+                console.log(e.clientY);
+            }
+        };
         _this.state = {
             shiftX: 0,
             shiftY: 0,
@@ -18618,25 +18632,9 @@ var Map = /** @class */ (function (_super) {
         return _this;
         // this.onMouseDown = this.onMouseDown.bind(this);
     }
-    // public componentDidMount() {
-    //     const divImg = this.refs.divImg as HTMLElement;
-    //     divImg.addEventListener("mousedown", this.onMouseDown.bind(this));
-    // }
     Map.prototype.render = function () {
-        return (React.createElement("div", { ref: "divImg", className: "map", onMouseMove: this.onMouseMove.bind(this), onMouseDown: this.onMouseDown.bind(this), onMouseUp: this.onMouseUp.bind(this), style: { position: "relative" } },
+        return (React.createElement("div", { ref: "divImg", className: "map", onMouseMove: this.onMouseMove, onMouseDown: this.onMouseDown, onMouseUp: this.onMouseUp, style: { position: "relative" } },
             React.createElement("img", { src: "../dist/map.jpg", draggable: false, width: 500 * this.props.scale, height: 500 * this.props.scale })));
-    };
-    Map.prototype.onMouseDown = function () {
-        console.log("MouseDown");
-    };
-    Map.prototype.onMouseUp = function () {
-        console.log("MouseUp");
-    };
-    Map.prototype.onMouseMove = function (e) {
-        if (e.buttons === 1) {
-            console.log(e.clientX);
-            console.log(e.clientY);
-        }
     };
     return Map;
 }(React.Component));
