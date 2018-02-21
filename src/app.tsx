@@ -53,7 +53,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                     </tr>
                     <tr className="canvas-app-body">
                         <td >
-                            <div className="canvas-app-image" onWheel={this.onWheel.bind(this)}>
+                            <div className="canvas-app-image" onWheel={this.onWheel}>
                                 <Map scale={this.state.imageScale} />
                             </div>
                         </td>
@@ -72,9 +72,12 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     //#region Mouse actions
-    public onWheel(a: any) {
+    protected onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const scale = this.state.imageScale;
-        const newScale = scale! - a.deltaY / 1000;
+        const newScale = scale! - e.deltaY / 1000;
         if (scale && newScale < 5 && newScale > 1) {
             this.setState({
                 imageScale: newScale,
@@ -88,13 +91,13 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     //#endregion
 
-    public onClickGlases(item: string) {
+    protected onClickGlasses(item: string) {
         this.setState({
             stikerUrl: item,
         });
     }
 
-    public onZoomIn() {
+    protected onZoomIn() {
         if (this.state.stikerUrl) {
             this.setState({
                 stikerScale: this.state.stikerScale! + 0.2,
@@ -105,7 +108,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             });
         }
     }
-    public onZoomOut() {
+    protected onZoomOut() {
         if (this.state.stikerUrl) {
             this.setState({
                 stikerScale: this.state.stikerScale! - 0.2,
