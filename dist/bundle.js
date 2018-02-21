@@ -18612,8 +18612,8 @@ var Map = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.drag = false;
         _this.state = {
-            x: 50,
-            y: 50,
+            shiftX: 0,
+            shiftY: 0,
         };
         return _this;
         // this.onMouseDown = this.onMouseDown.bind(this);
@@ -18624,7 +18624,7 @@ var Map = /** @class */ (function (_super) {
     // }
     Map.prototype.render = function () {
         return (React.createElement("div", { ref: "divImg", className: "map", onMouseMove: this.onMouseMove.bind(this), onMouseDown: this.onMouseDown.bind(this), onMouseUp: this.onMouseUp.bind(this), style: { position: "relative" } },
-            React.createElement("img", { src: "../dist/map.jpg", className: "dragme", width: 500 * this.props.scale, height: 500 * this.props.scale })));
+            React.createElement("img", { src: "../dist/map.jpg", draggable: false, width: 500 * this.props.scale, height: 500 * this.props.scale })));
     };
     Map.prototype.onMouseDown = function () {
         console.log("MouseDown");
@@ -18634,7 +18634,8 @@ var Map = /** @class */ (function (_super) {
     };
     Map.prototype.onMouseMove = function (e) {
         if (e.buttons === 1) {
-            console.log("MouseMove");
+            console.log(e.clientX);
+            console.log(e.clientY);
         }
     };
     return Map;

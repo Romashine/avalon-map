@@ -4,8 +4,8 @@ export interface IMapProps {
     scale: number;
 }
 export interface IMapState {
-    x: number;
-    y: number;
+    shiftX: number;
+    shiftY: number;
 }
 
 export class Map extends React.Component<IMapProps, IMapState> {
@@ -16,8 +16,8 @@ export class Map extends React.Component<IMapProps, IMapState> {
         super(props);
 
         this.state = {
-            x: 50,
-            y: 50,
+            shiftX: 0,
+            shiftY: 0,
         };
 
         // this.onMouseDown = this.onMouseDown.bind(this);
@@ -32,7 +32,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
                 onMouseUp={this.onMouseUp}
                 style={{ position: "relative" }}>
                 <img src="../dist/map.jpg"
-                    className="dragme"
+                    draggable = {false}
                     width={500 * this.props.scale}
                     height={500 * this.props.scale}
                 />
@@ -53,7 +53,9 @@ export class Map extends React.Component<IMapProps, IMapState> {
         e.preventDefault();
 
         if (e.buttons === 1) {
-            console.log("MouseMove");
+            console.log(e.clientX);
+            console.log(e.clientY);
+
         }
     }
 }
