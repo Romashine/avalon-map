@@ -48,7 +48,10 @@ export class Map extends React.Component<IMapProps, IMapState> {
         console.log("MouseUp");
     }
 
-    protected onMouseMove = (e: React.MouseEvent<HTMLTableCellElement>) => {
+    protected onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        e.preventDefault();
+
         if (e.buttons === 1) {
             console.log("MouseMove");
         }
