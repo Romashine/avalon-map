@@ -18495,7 +18495,7 @@ var App = /** @class */ (function (_super) {
                 React.createElement("tr", { className: "canvas-app-body" },
                     React.createElement("td", null,
                         React.createElement("div", { className: "canvas-app-image", onWheel: this.onWheel.bind(this) },
-                            React.createElement(map_1.Map, { imageScale: this.state.imageScale })))),
+                            React.createElement(map_1.Map, { scale: this.state.imageScale })))),
                 React.createElement("tr", null,
                     React.createElement("td", null,
                         React.createElement("div", { className: "canvas-app-footer text-header" },
@@ -18610,12 +18610,32 @@ var Map = /** @class */ (function (_super) {
     tslib_1.__extends(Map, _super);
     function Map(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = {};
+        _this.drag = false;
+        _this.state = {
+            x: 50,
+            y: 50,
+        };
         return _this;
+        // this.onMouseDown = this.onMouseDown.bind(this);
     }
+    // public componentDidMount() {
+    //     const divImg = this.refs.divImg as HTMLElement;
+    //     divImg.addEventListener("mousedown", this.onMouseDown.bind(this));
+    // }
     Map.prototype.render = function () {
-        return (React.createElement("div", { className: "map" },
-            React.createElement("img", { src: "../dist/map.jpg", className: "dragme", height: 500 * this.props.imageScale, width: 500 * this.props.imageScale })));
+        return (React.createElement("div", { ref: "divImg", className: "map", onMouseMove: this.onMouseMove.bind(this), onMouseDown: this.onMouseDown.bind(this), onMouseUp: this.onMouseUp.bind(this), style: { position: "relative" } },
+            React.createElement("img", { src: "../dist/map.jpg", className: "dragme", width: 500 * this.props.scale, height: 500 * this.props.scale })));
+    };
+    Map.prototype.onMouseDown = function () {
+        console.log("MouseDown");
+    };
+    Map.prototype.onMouseUp = function () {
+        console.log("MouseUp");
+    };
+    Map.prototype.onMouseMove = function (e) {
+        if (e.buttons === 1) {
+            console.log("MouseMove");
+        }
     };
     return Map;
 }(React.Component));
