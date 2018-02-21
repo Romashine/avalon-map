@@ -73,6 +73,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     //#region Mouse actions
     protected onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        // Отмена передачи события onWheel родительским элементам
         e.preventDefault();
         e.stopPropagation();
 
