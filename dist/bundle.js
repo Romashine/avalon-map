@@ -18468,21 +18468,50 @@ module.exports = camelize;
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(14);
 var React = __webpack_require__(2);
-var map_1 = __webpack_require__(29);
+var icon_1 = __webpack_require__(29);
 var App = /** @class */ (function (_super) {
     tslib_1.__extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.img = new Image();
+        _this.nowMouseX = 0;
+        _this.nowMouseY = 0;
         //#region Mouse actions
+        _this.onMouseDown = function (e) {
+            console.log("Down");
+            console.log(e.nativeEvent.offsetX);
+            console.log(e.nativeEvent.offsetY);
+            _this.nowMouseX = e.nativeEvent.offsetX;
+            _this.nowMouseY = e.nativeEvent.offsetY;
+        };
+        _this.onMouseMove = function (e) {
+            if (e.buttons === 1) {
+                console.log("move");
+                _this.setState({
+                    mapX: _this.state.mapX + e.nativeEvent.offsetX - _this.nowMouseX,
+                    mapY: _this.state.mapY + e.nativeEvent.offsetY - _this.nowMouseY,
+                });
+            }
+        };
+        //Проблема с быстрой прокруткой
         _this.onWheel = function (e) {
+            // Отмена передачи события onWheel родительским элементам
             e.preventDefault();
             e.stopPropagation();
             var scale = _this.state.imageScale;
             var newScale = scale - e.deltaY / 1000;
-            if (scale && newScale < 5 && newScale > 1) {
+            var shiftCentral = 0;
+            if (e.deltaY > 0) {
+                shiftCentral = 25;
+            }
+            else {
+                shiftCentral = -25;
+            }
+            if (scale && newScale <= 5 && newScale >= 1) {
                 _this.setState({
                     imageScale: newScale,
+                    mapX: _this.state.mapX + shiftCentral,
+                    mapY: _this.state.mapY + shiftCentral,
                 });
             }
         };
@@ -18493,6 +18522,8 @@ var App = /** @class */ (function (_super) {
             stikerScale: 1,
             stikerX: 20,
             stikerY: 20,
+            mapX: 415,
+            mapY: 0,
         };
         // Привязка карты
         _this.img.src = "../dist/map.jpg";
@@ -18505,94 +18536,27 @@ var App = /** @class */ (function (_super) {
                     React.createElement("td", null,
                         React.createElement("div", { className: "canvas-app-header text-header" }, "Avalon"))),
                 React.createElement("tr", { className: "canvas-app-body" },
-                    React.createElement("td", null,
-                        React.createElement("div", { className: "canvas-app-image", onWheel: this.onWheel },
-                            React.createElement(map_1.Map, { scale: this.state.imageScale })))),
+                    React.createElement("td", { className: "canvas-app-image" },
+                        React.createElement("div", { onWheel: this.onWheel, onMouseDown: this.onMouseDown.bind(this), onMouseMove: this.onMouseMove.bind(this) },
+                            React.createElement("img", { ref: "imgMap", src: "../dist/map.jpg", draggable: false, width: 500 * this.state.imageScale, height: 500 * this.state.imageScale, style: {
+                                    left: this.state.mapX,
+                                    top: this.state.mapY,
+                                } })))),
                 React.createElement("tr", null,
                     React.createElement("td", null,
+                        React.createElement("div", { onClick: this.onLeft.bind(this) },
+                            React.createElement(icon_1.Icon, { name: "chevron_left" })),
                         React.createElement("div", { className: "canvas-app-footer text-header" },
                             "Web page in development. For all suggestions and comments -",
                             React.createElement("a", { href: "https://discord.gg/9dGE8us" }, "https://discord.gg/9dGE8us")))))));
     };
     //#endregion
     //#region Navigation panel
-    //#endregion
-    App.prototype.onClickGlasses = function (item) {
-        this.setState({
-            stikerUrl: item,
-        });
-    };
-    App.prototype.onZoomIn = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerScale: this.state.stikerScale + 0.2,
-            });
-        }
-        else {
-            this.setState({
-                imageScale: this.state.imageScale + 0.2,
-            });
-        }
-    };
-    App.prototype.onZoomOut = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerScale: this.state.stikerScale - 0.2,
-            });
-        }
-        else {
-            this.setState({
-                imageScale: this.state.imageScale - 0.2,
-            });
-        }
-    };
     App.prototype.onLeft = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerX: this.state.stikerX - 10,
-            });
-        }
-        else {
-            this.setState({
-                imageX: this.state.imageX - 10,
-            });
-        }
-    };
-    App.prototype.onRight = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerX: this.state.stikerX + 10,
-            });
-        }
-        else {
-            this.setState({
-                imageX: this.state.imageX + 10,
-            });
-        }
-    };
-    App.prototype.onDown = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerY: this.state.stikerY + 10,
-            });
-        }
-        else {
-            this.setState({
-                imageY: this.state.imageY + 10,
-            });
-        }
-    };
-    App.prototype.onUp = function () {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerY: this.state.stikerY - 10,
-            });
-        }
-        else {
-            this.setState({
-                imageY: this.state.imageY - 10,
-            });
-        }
+        console.log(this.state.mapX);
+        this.setState({
+            mapX: this.state.mapX - 10,
+        });
     };
     return App;
 }(React.Component));
@@ -18608,37 +18572,19 @@ exports.App = App;
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(14);
 var React = __webpack_require__(2);
-var Map = /** @class */ (function (_super) {
-    tslib_1.__extends(Map, _super);
-    function Map(props) {
+var Icon = /** @class */ (function (_super) {
+    tslib_1.__extends(Icon, _super);
+    function Icon(props) {
         var _this = _super.call(this, props) || this;
-        _this.drag = false;
-        _this.onMouseDown = function () {
-            console.log("MouseDown");
-        };
-        _this.onMouseUp = function () {
-            console.log("MouseUp");
-        };
-        _this.onMouseMove = function (e) {
-            if (e.buttons === 1) {
-                console.log(e.clientX);
-                console.log(e.clientY);
-            }
-        };
-        _this.state = {
-            shiftX: 0,
-            shiftY: 0,
-        };
+        _this.state = {};
         return _this;
-        // this.onMouseDown = this.onMouseDown.bind(this);
     }
-    Map.prototype.render = function () {
-        return (React.createElement("div", { ref: "divImg", className: "map", onMouseMove: this.onMouseMove, onMouseDown: this.onMouseDown, onMouseUp: this.onMouseUp, style: { position: "relative" } },
-            React.createElement("img", { src: "../dist/map.jpg", draggable: false, width: 500 * this.props.scale, height: 500 * this.props.scale })));
+    Icon.prototype.render = function () {
+        return (React.createElement("i", { className: "material-icons" }, this.props.name));
     };
-    return Map;
+    return Icon;
 }(React.Component));
-exports.Map = Map;
+exports.Icon = Icon;
 
 
 /***/ })

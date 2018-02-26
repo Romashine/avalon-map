@@ -18,12 +18,17 @@ export interface IAppState {
     stikerX?: number;
     stikerY?: number;
     stikerScale?: number;
+    mapX?: number;
+    mapY?: number;
 }
 
 export class App extends React.Component<IAppProps, IAppState> {
     public img = new Image();
+    public nowMouseX = 0;
+    public nowMouseY = 0;
 
     constructor(props: IAppProps) {
+
 
         super(props);
 
@@ -34,6 +39,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             stikerScale: 1,
             stikerX: 20,
             stikerY: 20,
+            mapX: 415,
+            mapY: 0,
         };
 
         // Привязка карты
@@ -52,14 +59,25 @@ export class App extends React.Component<IAppProps, IAppState> {
                         </td>
                     </tr>
                     <tr className="canvas-app-body">
-                        <td >
-                            <div className="canvas-app-image" onWheel={this.onWheel}>
-                                <Map scale={this.state.imageScale} />
+                        <td className="canvas-app-image">
+                            <div onWheel={this.onWheel}
+                            onMouseDown={this.onMouseDown.bind(this)}
+                            onMouseMove={this.onMouseMove.bind(this)}>
+                                <img ref="imgMap" src="../dist/map.jpg"
+                                    draggable={false}
+                                    width={500 * this.state.imageScale}
+                                    height={500 * this.state.imageScale}
+                                    style={{
+                                        left: this.state.mapX,
+                                        top: this.state.mapY,
+                                    }}
+                                />
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
+                            <div onClick={this.onLeft.bind(this)} ><Icon name="chevron_left" /></div>
                             <div className="canvas-app-footer text-header">
                                 Web page in development. For all suggestions and comments -
                                 <a href="https://discord.gg/9dGE8us">https://discord.gg/9dGE8us</a>
@@ -72,6 +90,24 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     //#region Mouse actions
+    protected onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        // console.log("Down")
+        // console.log(e.nativeEvent.offsetX)
+        // console.log(e.nativeEvent.offsetY)
+        this.nowMouseX = e.nativeEvent.offsetX;
+        this.nowMouseY = e.nativeEvent.offsetY;
+    }
+    protected onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.buttons === 1) {
+            // console.log("move")
+            this.setState({
+                mapX: this.state.mapX! + e.nativeEvent.offsetX - this.nowMouseX,
+                mapY: this.state.mapY! + e.nativeEvent.offsetY - this.nowMouseY,
+            })
+        }
+    }
+
+    //Проблема с быстрой прокруткой
     protected onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
         // Отмена передачи события onWheel родительским элементам
         e.preventDefault();
@@ -79,9 +115,17 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         const scale = this.state.imageScale;
         const newScale = scale! - e.deltaY / 1000;
-        if (scale && newScale < 5 && newScale > 1) {
+        let shiftCentral = 0;
+        if (e.deltaY > 0) {
+            shiftCentral = 25;
+        } else {
+            shiftCentral = -25;
+        }
+        if (scale && newScale <= 5 && newScale >= 1) {
             this.setState({
                 imageScale: newScale,
+                mapX: this.state.mapX! + shiftCentral,
+                mapY: this.state.mapY! + shiftCentral,
             });
         }
     }
@@ -89,81 +133,12 @@ export class App extends React.Component<IAppProps, IAppState> {
     //#endregion
 
     //#region Navigation panel
-
-    //#endregion
-
-    protected onClickGlasses(item: string) {
-        this.setState({
-            stikerUrl: item,
-        });
-    }
-
-    protected onZoomIn() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerScale: this.state.stikerScale! + 0.2,
-            });
-        } else {
-            this.setState({
-                imageScale: this.state.imageScale! + 0.2,
-            });
-        }
-    }
-    protected onZoomOut() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerScale: this.state.stikerScale! - 0.2,
-            });
-        } else {
-            this.setState({
-                imageScale: this.state.imageScale! - 0.2,
-            });
-        }
-    }
-
     public onLeft() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerX: this.state.stikerX! - 10,
-            });
-        } else {
-            this.setState({
-                imageX: this.state.imageX! - 10,
-            });
-        }
+        console.log(this.state.mapX);
+        this.setState({
+            mapX: this.state.mapX! - 10,
+        })
     }
-    public onRight() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerX: this.state.stikerX! + 10,
-            });
-        } else {
-            this.setState({
-                imageX: this.state.imageX! + 10,
-            });
-        }
-    }
-    public onDown() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerY: this.state.stikerY! + 10,
-            });
-        } else {
-            this.setState({
-                imageY: this.state.imageY! + 10,
-            });
-        }
-    }
-    public onUp() {
-        if (this.state.stikerUrl) {
-            this.setState({
-                stikerY: this.state.stikerY! - 10,
-            });
-        } else {
-            this.setState({
-                imageY: this.state.imageY! - 10,
-            });
-        }
-    }
+    //#endregion
 
 }

@@ -4,58 +4,34 @@ export interface IMapProps {
     scale: number;
 }
 export interface IMapState {
-    shiftX: number;
-    shiftY: number;
+    mapX: number;
+    mapY: number;
 }
 
 export class Map extends React.Component<IMapProps, IMapState> {
-
-    public drag = false;
-
+       
     constructor(props: IMapProps) {
         super(props);
-
+        
         this.state = {
-            shiftX: 0,
-            shiftY: 0,
+            mapX: 425,
+            mapY: 0,
         };
-
-        // this.onMouseDown = this.onMouseDown.bind(this);
-
     }
 
     public render() {
         return (
-            <div ref="divImg" className="map"
-                onMouseMove={this.onMouseMove}
-                onMouseDown={this.onMouseDown}
-                onMouseUp={this.onMouseUp}
-                style={{ position: "relative" }}>
-                <img src="../dist/map.jpg"
-                    draggable = {false}
+            <div>
+                <img ref="imgMap" src="../dist/map.jpg"
                     width={500 * this.props.scale}
                     height={500 * this.props.scale}
+                    style={{
+                        left: this.state.mapX,
+                        top: this.state.mapY,
+                    }}
                 />
             </div>
         );
     }
 
-    protected onMouseDown = () => {
-        console.log("MouseDown");
-    }
-
-    protected onMouseUp = () => {
-        console.log("MouseUp");
-    }
-
-    protected onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (e.buttons === 1) {
-            console.log(e.clientX);
-            console.log(e.clientY);
-
-        }
-    }
 }
