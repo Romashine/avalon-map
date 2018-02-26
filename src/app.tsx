@@ -60,9 +60,9 @@ export class App extends React.Component<IAppProps, IAppState> {
                     </tr>
                     <tr className="canvas-app-body">
                         <td className="canvas-app-image">
-                            <div onWheel={this.onWheel}
-                            onMouseDown={this.onMouseDown.bind(this)}
-                            onMouseMove={this.onMouseMove.bind(this)}>
+                            <div onWheel={this.onWheel.bind(this)}
+                                onMouseDown={this.onMouseDown.bind(this)}
+                                onMouseMove={this.onMouseMove.bind(this)}>
                                 <img ref="imgMap" src="../dist/map.jpg"
                                     draggable={false}
                                     width={500 * this.state.imageScale}
@@ -77,7 +77,6 @@ export class App extends React.Component<IAppProps, IAppState> {
                     </tr>
                     <tr>
                         <td>
-                            <div onClick={this.onLeft.bind(this)} ><Icon name="chevron_left" /></div>
                             <div className="canvas-app-footer text-header">
                                 Web page in development. For all suggestions and comments -
                                 <a href="https://discord.gg/9dGE8us">https://discord.gg/9dGE8us</a>
@@ -92,14 +91,13 @@ export class App extends React.Component<IAppProps, IAppState> {
     //#region Mouse actions
     protected onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         // console.log("Down")
-        // console.log(e.nativeEvent.offsetX)
-        // console.log(e.nativeEvent.offsetY)
         this.nowMouseX = e.nativeEvent.offsetX;
         this.nowMouseY = e.nativeEvent.offsetY;
     }
     protected onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.buttons === 1) {
             // console.log("move")
+
             this.setState({
                 mapX: this.state.mapX! + e.nativeEvent.offsetX - this.nowMouseX,
                 mapY: this.state.mapY! + e.nativeEvent.offsetY - this.nowMouseY,
