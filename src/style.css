@@ -16,6 +16,8 @@ html {
     background: black;
 }
 
+
+
 .canvas-app-table{
     
     width: 100%;
@@ -65,4 +67,10 @@ html {
 .dragme{
     position:relative;
     cursor: move;
+}
+
+.BatleInfo{
+    background: white;
+    padding: 5;
+   
 }

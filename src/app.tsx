@@ -2,6 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Icon } from "./components/icon";
 import { Map } from "./components/map";
+import { Batle } from './components/batle';
+import { BatleInfo } from './components/batleInfo';
 
 declare const glases: string[];
 
@@ -26,6 +28,8 @@ export class App extends React.Component<IAppProps, IAppState> {
     public img = new Image();
     public nowMouseX = 0;
     public nowMouseY = 0;
+    public shiftCentral = 0;
+    public batleinfo = false; //переключатель отображения информации о сражении
 
     constructor(props: IAppProps) {
 
@@ -72,6 +76,14 @@ export class App extends React.Component<IAppProps, IAppState> {
                                         top: this.state.mapY,
                                     }}
                                 />
+                                <Batle
+                                    x={150}
+                                    y={200}
+                                    scale={this.state.imageScale!}
+                                    mapX={this.state.mapX!}
+                                    mapY={this.state.mapY!}
+                                />
+                                {this.batleinfo?<BatleInfo/>: null }
                             </div>
                         </td>
                     </tr>
@@ -89,6 +101,8 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     //#region Mouse actions
+
+
     protected onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         // console.log("Down")
         this.nowMouseX = e.nativeEvent.offsetX;
@@ -113,17 +127,16 @@ export class App extends React.Component<IAppProps, IAppState> {
 
         const scale = this.state.imageScale;
         const newScale = scale! - e.deltaY / 1000;
-        let shiftCentral = 0;
         if (e.deltaY > 0) {
-            shiftCentral = 25;
+            this.shiftCentral = 25;
         } else {
-            shiftCentral = -25;
+            this.shiftCentral = -25;
         }
         if (scale && newScale <= 5 && newScale >= 1) {
             this.setState({
                 imageScale: newScale,
-                mapX: this.state.mapX! + shiftCentral,
-                mapY: this.state.mapY! + shiftCentral,
+                mapX: this.state.mapX! + this.shiftCentral,
+                mapY: this.state.mapY! + this.shiftCentral,
             });
         }
     }
