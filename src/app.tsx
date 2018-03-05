@@ -6,6 +6,7 @@ import { Batle } from './components/batle';
 import { BatleInfo } from './components/batleInfo';
 import { MapMenu } from './components/mapMenu';
 import { Grid } from './components/grid';
+import { Land } from './components/land';
 
 declare const glases: string[];
 
@@ -78,6 +79,13 @@ export class App extends React.Component<IAppProps, IAppState> {
                                         top: this.state.mapY,
                                     }}
                                 />
+                                <Land
+                                    x={0}
+                                    y={0}
+                                    scale={this.state.imageScale!}
+                                    mapX={this.state.mapX!}
+                                    mapY={this.state.mapY!}
+                                />
                                 <Grid
                                     scale={this.state.imageScale!}
                                     mapX={this.state.mapX!}
@@ -93,7 +101,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                                     mapY={this.state.mapY!}
                                 />
                                 {this.batleinfo ? <BatleInfo /> : null}
-                                <MapMenu/>
+                                <MapMenu />
                             </div>
                         </td>
                     </tr>

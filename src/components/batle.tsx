@@ -1,8 +1,8 @@
 import * as React from "react";
 
 export interface IBatleProps {
-    onMouseOverBatle: (e: any)=>void;
-    onMouseOutBatle: (e: any)=>void;
+    onMouseOverBatle: (e: any) => void;
+    onMouseOutBatle: (e: any) => void;
     x: number;
     y: number;
     scale: number;
@@ -11,7 +11,7 @@ export interface IBatleProps {
 }
 export interface IBatleState {
     [key: string]: string;
- }
+}
 
 export class Batle extends React.Component<IBatleProps, IBatleState> {
 
@@ -23,18 +23,19 @@ export class Batle extends React.Component<IBatleProps, IBatleState> {
 
     public render() {
         return (
-                <object
-                    onMouseOver={(e) => this.props.onMouseOverBatle(e)}
-                    onMouseOut={(e) => this.props.onMouseOutBatle(e)}
-                    data="../dist/batle.svg"
-                    type="image/svg+xml"
-                    id="batle"
-                    width={25 * this.props.scale}
-                    height={25 * this.props.scale}
-                    style={{
-                        left: this.props.x * this.props.scale + this.props.mapX!,
-                        top: this.props.y * this.props.scale + this.props.mapY!,
-                    }} />
+            <object
+                onMouseOver={(e) => this.props.onMouseOverBatle(e)}
+                onMouseOut={(e) => this.props.onMouseOutBatle(e)}
+                data="../dist/batle.svg"
+                type="image/svg+xml"
+                id="batle"
+                width={25 * this.props.scale}
+                height={25 * this.props.scale}
+                style={{
+                    left: this.props.x * this.props.scale + this.props.mapX!,
+                    top: this.props.y * this.props.scale + this.props.mapY!,
+                }}
+            />
         );
     }
 }

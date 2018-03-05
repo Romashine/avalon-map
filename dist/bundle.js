@@ -18472,6 +18472,7 @@ var batle_1 = __webpack_require__(29);
 var batleInfo_1 = __webpack_require__(30);
 var mapMenu_1 = __webpack_require__(31);
 var grid_1 = __webpack_require__(32);
+var land_1 = __webpack_require__(39);
 var App = /** @class */ (function (_super) {
     tslib_1.__extends(App, _super);
     function App(props) {
@@ -18543,6 +18544,7 @@ var App = /** @class */ (function (_super) {
                                     left: this.state.mapX,
                                     top: this.state.mapY,
                                 } }),
+                            React.createElement(land_1.Land, { x: 0, y: 0, scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
                             React.createElement(grid_1.Grid, { scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
                             React.createElement(batle_1.Batle, { onMouseOverBatle: this.onMouseOverBatle.bind(this), onMouseOutBatle: this.onMouseOutBatle.bind(this), x: 150, y: 200, scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
                             this.batleinfo ? React.createElement(batleInfo_1.BatleInfo, null) : null,
@@ -46760,6 +46762,33 @@ module.exports = reactReconciler;
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = __webpack_require__(5);
+var React = __webpack_require__(0);
+var Land = /** @class */ (function (_super) {
+    tslib_1.__extends(Land, _super);
+    function Land(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {};
+        return _this;
+    }
+    Land.prototype.render = function () {
+        return (React.createElement("object", { data: "../dist/land.svg", type: "image/svg+xml", id: "land", width: 500 * this.props.scale, height: 500 * this.props.scale, style: {
+                left: this.props.x * this.props.scale + this.props.mapX,
+                top: this.props.y * this.props.scale + this.props.mapY,
+            } }));
+    };
+    return Land;
+}(React.Component));
+exports.Land = Land;
+
 
 /***/ })
 /******/ ]);
