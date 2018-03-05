@@ -69,8 +69,20 @@ html {
     cursor: move;
 }
 
-.BatleInfo{
+.batleInfo{
+    opacity: 0.6;
     background: white;
     padding: 5;
    
+}
+
+.mapMenu{
+    left: 30px;
+    top: 100px;
+    width: 90px;
+    height: 200px;
+    opacity: 0.6;
+    background: white;
+    padding: 5;
+    
 }

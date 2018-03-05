@@ -1,6 +1,8 @@
 import * as React from "react";
 
 export interface IBatleProps {
+    onMouseOverBatle: (e: any)=>void;
+    onMouseOutBatle: (e: any)=>void;
     x: number;
     y: number;
     scale: number;
@@ -22,7 +24,8 @@ export class Batle extends React.Component<IBatleProps, IBatleState> {
     public render() {
         return (
                 <object
-                    onMouseOver={this.onMouseOverBatle.bind(this)}
+                    onMouseOver={(e) => this.props.onMouseOverBatle(e)}
+                    onMouseOut={(e) => this.props.onMouseOutBatle(e)}
                     data="../dist/batle.svg"
                     type="image/svg+xml"
                     id="batle"
@@ -33,8 +36,5 @@ export class Batle extends React.Component<IBatleProps, IBatleState> {
                         top: this.props.y * this.props.scale + this.props.mapY!,
                     }} />
         );
-    }
-    protected onMouseOverBatle() {
-        console.log("над батлом");
     }
 }

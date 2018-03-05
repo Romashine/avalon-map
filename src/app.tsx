@@ -4,6 +4,8 @@ import { Icon } from "./components/icon";
 import { Map } from "./components/map";
 import { Batle } from './components/batle';
 import { BatleInfo } from './components/batleInfo';
+import { MapMenu } from './components/mapMenu';
+import { Grid } from './components/grid';
 
 declare const glases: string[];
 
@@ -76,14 +78,22 @@ export class App extends React.Component<IAppProps, IAppState> {
                                         top: this.state.mapY,
                                     }}
                                 />
+                                <Grid
+                                    scale={this.state.imageScale!}
+                                    mapX={this.state.mapX!}
+                                    mapY={this.state.mapY!}
+                                />
                                 <Batle
+                                    onMouseOverBatle={this.onMouseOverBatle.bind(this)}
+                                    onMouseOutBatle={this.onMouseOutBatle.bind(this)}
                                     x={150}
                                     y={200}
                                     scale={this.state.imageScale!}
                                     mapX={this.state.mapX!}
                                     mapY={this.state.mapY!}
                                 />
-                                {this.batleinfo?<BatleInfo/>: null }
+                                {this.batleinfo ? <BatleInfo /> : null}
+                                <MapMenu/>
                             </div>
                         </td>
                     </tr>
@@ -101,7 +111,14 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     //#region Mouse actions
-
+    protected onMouseOverBatle() {
+        this.batleinfo = true;
+        this.setState({});
+    }
+    protected onMouseOutBatle() {
+        this.batleinfo = false;
+        this.setState({});
+    }
 
     protected onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         // console.log("Down")

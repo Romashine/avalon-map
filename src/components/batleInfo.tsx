@@ -14,7 +14,7 @@ export class BatleInfo extends React.Component<IBatleInfoProps, IBatleInfoState>
 
     public render() {
         return (
-            <div className="BatleInfo"
+            <div className="batleInfo"
             style={{
                 width: 300,
                 height: 400,
