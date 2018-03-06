@@ -100,7 +100,7 @@ export class App extends React.Component<IAppProps, IAppState> {
                                     mapX={this.state.mapX!}
                                     mapY={this.state.mapY!}
                                 />
-                                {this.batleinfo ? <BatleInfo /> : null}
+                                {this.batleinfo ? <BatleInfo info="упс, сражение не удалось" defense="Bob" attack="Gotr" /> : null}
                                 <MapMenu />
                             </div>
                         </td>

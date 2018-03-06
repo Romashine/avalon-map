@@ -18547,7 +18547,7 @@ var App = /** @class */ (function (_super) {
                             React.createElement(land_1.Land, { x: 0, y: 0, scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
                             React.createElement(grid_1.Grid, { scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
                             React.createElement(batle_1.Batle, { onMouseOverBatle: this.onMouseOverBatle.bind(this), onMouseOutBatle: this.onMouseOutBatle.bind(this), x: 150, y: 200, scale: this.state.imageScale, mapX: this.state.mapX, mapY: this.state.mapY }),
-                            this.batleinfo ? React.createElement(batleInfo_1.BatleInfo, null) : null,
+                            this.batleinfo ? React.createElement(batleInfo_1.BatleInfo, { info: "\u0443\u043F\u0441, \u0441\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C", defense: "Bob", attack: "Gotr" }) : null,
                             React.createElement(mapMenu_1.MapMenu, null)))),
                 React.createElement("tr", null,
                     React.createElement("td", null,
@@ -18627,7 +18627,11 @@ var BatleInfo = /** @class */ (function (_super) {
                 height: 400,
                 top: 30,
                 right: 30,
-            } }, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u0441\u0440\u0430\u0436\u0435\u043D\u0438\u0438!"));
+            } },
+            React.createElement("p", null, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F \u043E \u0441\u0440\u0430\u0436\u0435\u043D\u0438\u0438!"),
+            React.createElement("p", null, "Атакующий: " + this.props.attack),
+            React.createElement("p", null, "Обороняющийся: " + this.props.defense),
+            this.props.info));
     };
     return BatleInfo;
 }(React.Component));
